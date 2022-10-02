@@ -37,13 +37,18 @@ Coded by www.creative-tim.com
 
 // Material Dashboard 2 React layouts
 import Dashboard from "layouts/dashboard";
-import Tables from "layouts/tables";
-import Billing from "layouts/billing";
-import RTL from "layouts/rtl";
-import Notifications from "layouts/notifications";
-import Profile from "layouts/profile";
+
+import Years from "layouts/project/years";
+import Student from "layouts/project/students";
+
+import Months from "layouts/project/month";
+import Files from "layouts/project/files";
+import Videos from "layouts/project/videos";
+import Exams from "layouts/project/exams";
+
+import Receipt from "layouts/project/receipt";
+
 import SignIn from "layouts/authentication/sign-in";
-import SignUp from "layouts/authentication/sign-up";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -51,67 +56,86 @@ import Icon from "@mui/material/Icon";
 const routes = [
   {
     type: "collapse",
-    name: "Dashboard",
+    name: "لوحة القيادة",
     key: "dashboard",
-    icon: <Icon fontSize="small">dashboard</Icon>,
+    icon: <Icon fontSize="medium">dashboard</Icon>,
     route: "/dashboard",
     component: <Dashboard />,
+    privateRoute: true,
+  },
+
+  {
+    type: "collapse",
+    name: "الطلاب",
+    key: "students",
+    icon: <Icon fontSize="medium">people</Icon>,
+    route: "/students",
+    component: <Student />,
+    privateRoute: true,
   },
   {
     type: "collapse",
-    name: "Tables",
-    key: "tables",
-    icon: <Icon fontSize="small">table_view</Icon>,
-    route: "/tables",
-    component: <Tables />,
+    name: "سنوات دراسيه",
+    key: "years",
+    icon: <Icon fontSize="medium">abc</Icon>,
+    route: "/years",
+    component: <Years />,
+    privateRoute: true,
   },
   {
     type: "collapse",
-    name: "Billing",
-    key: "billing",
-    icon: <Icon fontSize="small">receipt_long</Icon>,
-    route: "/billing",
-    component: <Billing />,
+    name: "شهور",
+    key: "months",
+    icon: <Icon fontSize="medium">today</Icon>,
+    route: "/months",
+    component: <Months />,
+    privateRoute: true,
   },
   {
     type: "collapse",
-    name: "RTL",
-    key: "rtl",
-    icon: <Icon fontSize="small">format_textdirection_r_to_l</Icon>,
-    route: "/rtl",
-    component: <RTL />,
+    name: " الملفات",
+    key: "files",
+    icon: <Icon fontSize="medium">backupTable</Icon>,
+    route: "/files",
+    component: <Files />,
+    privateRoute: true,
   },
   {
     type: "collapse",
-    name: "Notifications",
-    key: "notifications",
-    icon: <Icon fontSize="small">notifications</Icon>,
-    route: "/notifications",
-    component: <Notifications />,
+    name: "فيديو",
+    key: "videos",
+    icon: <Icon fontSize="medium">movie</Icon>,
+    route: "/videos",
+    component: <Videos />,
+    privateRoute: true,
   },
   {
     type: "collapse",
-    name: "Profile",
-    key: "profile",
-    icon: <Icon fontSize="small">person</Icon>,
-    route: "/profile",
-    component: <Profile />,
+    name: "الامتحانات",
+    key: "exams",
+    icon: <Icon fontSize="medium">listAlt</Icon>,
+    route: "/exams",
+    component: <Exams />,
+    privateRoute: true,
   },
+  {
+    type: "collapse",
+    name: "الإيصالات",
+    key: "receipt",
+    icon: <Icon fontSize="medium">receipt</Icon>,
+    route: "/receipt",
+    component: <Receipt />,
+    privateRoute: true,
+  },
+
   {
     type: "collapse",
     name: "Sign In",
     key: "sign-in",
-    icon: <Icon fontSize="small">login</Icon>,
+    icon: <Icon fontSize="medium">login</Icon>,
     route: "/authentication/sign-in",
     component: <SignIn />,
-  },
-  {
-    type: "collapse",
-    name: "Sign Up",
-    key: "sign-up",
-    icon: <Icon fontSize="small">assignment</Icon>,
-    route: "/authentication/sign-up",
-    component: <SignUp />,
+    privateRoute: false,
   },
 ];
 
