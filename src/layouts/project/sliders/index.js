@@ -1,9 +1,36 @@
+/**
+=========================================================
+* Material Dashboard 2 React - v2.1.0
+=========================================================
+
+* Product Page: https://www.creative-tim.com/product/material-dashboard-react
+* Copyright 2022 Creative Tim (https://www.creative-tim.com)
+
+Coded by www.creative-tim.com
+
+ =========================================================
+
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+*/
+
+// @mui material components
+import Grid from "@mui/material/Grid";
+import Card from "@mui/material/Card";
+
+// Material Dashboard 2 React components
+import MDBox from "components/MDBox";
+import MDTypography from "components/MDTypography";
+
+// Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
+import Footer from "examples/Footer";
+import DataTable from "examples/Tables/DataTable";
 
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import MaterialTable from "material-table";
+import { DropdownButton, Dropdown, Modal } from "react-bootstrap";
 
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -11,104 +38,78 @@ import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 
 import AWS from "aws-sdk";
 
-const Tables = () => {
+const Dashboard = () => {
   const spacesEndpoint = new AWS.Endpoint("fra1.digitaloceanspaces.com");
   const s3 = new AWS.S3({
     endpoint: spacesEndpoint,
     accessKeyId: "DO00XDWBZE37C6G4MWE2",
     secretAccessKey: "TOMZ7v67kNc0bJfNPwJ2/YaJJExkLD0zR7ojM72iim4",
   });
-  const [data, setData] = useState([]);
-  const [units, setUnits] = useState([]);
+  const [sliders, setSliders] = useState([]);
 
-  const [file, setFile] = useState({
-    name: "",
-    link: "",
-    unitId: "",
-  });
-
-  const [enable, setEnable] = useState(true);
-
-  const [file_, setFile_] = useState({
+  const [slider, setSlider] = useState({
     id: 0,
     name: "",
-    link: "",
-    unitId: "",
+    image: "",
   });
+
+  const [slider_, setSlider_] = useState({
+    id: 0,
+    name: "",
+    image: "",
+  });
+
   const [show, setShow] = useState(false);
   const [show_, setShow_] = useState(false);
 
   const handleClose = () => setShow(false);
+
   const handleClose_ = () => setShow_(false);
-
-  const handleShow = () => setShow(true);
-
   useEffect(() => {
-    getdata();
-    getUnits();
-  }, []);
-
-  const getdata = () => {
+    getsliders();
     let search = window.location.search;
     let params = new URLSearchParams(search);
-    let id = params.get("unitId");
+    let id = params.get("sliderId");
+  }, []);
+
+  const getsliders = () => {
     axios({
       method: "get",
       headers: { Authorization: `Bearer ${localStorage.getItem("students-app-token")}` },
-      url: `https://api.students.blankweb.online/api/file/${id || -1}`,
+      url: `https://api.students.blankweb.online/api/slider/`,
     }).then((result) => {
-      let da = result.data.files;
+      let da = result.data.sliders.reverse();
 
       console.log(da);
-      setData([]);
-      setData(da);
+      setSliders([]);
+      setSliders(da);
     });
   };
 
-  const getUnits = () => {
-    axios({
-      method: "get",
-      headers: { Authorization: `Bearer ${localStorage.getItem("students-app-token")}` },
-      url: `https://api.students.blankweb.online/api/unit/-1`,
-    }).then((result) => {
-      let da = result.data.units;
-
-      console.log(da);
-
-      setUnits([]);
-      setUnits(da);
-    });
-  };
-
-  const delet = (file) => {
-    console.log(file);
+  const delet = (id) => {
     axios({
       method: "delete",
       headers: { Authorization: `Bearer ${localStorage.getItem("students-app-token")}` },
-      url: `https://api.students.blankweb.online/api/file/`,
-      data: { id: file },
+      url: `https://api.students.blankweb.online/api/slider/`,
+      data: { id: id },
     }).then((result) => {
-      getdata();
+      getsliders();
     });
   };
 
   const add = (e) => {
-    // e.preventDefault();
-
-    console.log(file);
     axios({
       method: "post",
       headers: { Authorization: `Bearer ${localStorage.getItem("students-app-token")}` },
-      url: `https://api.students.blankweb.online/api/file/`,
-      data: { ...file },
+      url: `https://api.students.blankweb.online/api/slider/`,
+      data: { ...slider },
     }).then((result) => {
-      console.log(result);
-      getdata();
-      handleClose();
+      getsliders();
     });
   };
 
@@ -116,11 +117,11 @@ const Tables = () => {
     axios({
       method: "put",
       headers: { Authorization: `Bearer ${localStorage.getItem("students-app-token")}` },
-      url: `https://api.students.blankweb.online/api/file/`,
-      data: { ...file_ },
+      url: `https://api.students.blankweb.online/api/slider/`,
+      data: slider_,
     }).then((result) => {
-      getdata();
-      handleClose_();
+      setShow_(false);
+      getsliders();
     });
   };
 
@@ -150,8 +151,7 @@ const Tables = () => {
             // If there is no error updating the editor with the imageUrl
             const imageUrl = "https://student-unit-image.fra1.digitaloceanspaces.com/" + imageName;
             console.log(imageUrl);
-            setEnable(false);
-            setFile({ ...file, link: imageUrl });
+            setSlider({ ...slider, image: imageUrl });
           }
         });
     }
@@ -183,8 +183,7 @@ const Tables = () => {
             // If there is no error updating the editor with the imageUrl
             const imageUrl = "https://student-unit-image.fra1.digitaloceanspaces.com/" + imageName;
             console.log(imageUrl);
-            setFile_({ ...file_, link: imageUrl });
-            setEnable(false);
+            setSlider_({ ...slider_, image: imageUrl });
           }
         });
     }
@@ -196,10 +195,9 @@ const Tables = () => {
       <div style={{ width: "100%" }}>
         <MaterialTable
           style={{ backgroundColor: "#eff2f5" }}
-          title=" ملفات"
+          title="اعلانات"
           columns={[
             { title: "الاسم", field: "name" },
-
             {
               title: "البريد الالكتروني",
               field: "email",
@@ -207,19 +205,20 @@ const Tables = () => {
                 // console.log(data, years);
 
                 return (
-                  <a target="_blank" href={data?.link}>
-                    {data?.link.slice(0, 30)}
+                  <a target="_blank" href={data?.image}>
+                    {data?.image.slice(0, 30)}
                   </a>
                 );
               },
             },
           ]}
-          data={data}
+          data={sliders}
           actions={[
             {
               icon: "edit",
+              tooltip: "Save User",
               onClick: (event, rowData) => {
-                setFile_({ ...rowData });
+                setSlider_({ ...rowData });
                 setShow_(true);
               },
             },
@@ -245,7 +244,7 @@ const Tables = () => {
         />
 
         <Dialog open={show} onClose={handleClose}>
-          <DialogTitle>اضافة فيديو</DialogTitle>
+          <DialogTitle>اضافة اعلان </DialogTitle>
           <DialogContent>
             <TextField
               autoFocus
@@ -254,12 +253,12 @@ const Tables = () => {
               label="اسم "
               name="name"
               aria-describedby="emailHelp"
-              value={file.name}
+              value={slider.name}
               fullWidth
               onChange={(e) => {
                 e.preventDefault();
                 console.log(e.target.value);
-                setFile({ ...file, name: e.target.value });
+                setSlider({ ...slider, name: e.target.value });
               }}
             />
             <div class="form-group w-20 fmgp">
@@ -273,29 +272,9 @@ const Tables = () => {
                 }}
               />
             </div>
-
-            <div class="select-dropdown">
-              <select
-                class="form-control"
-                onChange={(e) => {
-                  console.log(e.target.value);
-                  setFile({ ...file, unitId: e.target.value });
-                }}
-              >
-                <hr />
-
-                <option selected disabled>
-                  اختار الشهر
-                </option>
-                {units.map((unit) => (
-                  <option value={unit.id}>{unit.name}</option>
-                ))}
-              </select>
-            </div>
           </DialogContent>
           <DialogActions>
             <Button
-              disabled={enable}
               onClick={(e) => {
                 handleClose();
                 add();
@@ -310,24 +289,23 @@ const Tables = () => {
         </Dialog>
 
         <Dialog open={show_} onClose={handleClose_}>
-          <DialogTitle>تعديل فيديو </DialogTitle>
+          <DialogTitle>تعديل اعلان </DialogTitle>
           <DialogContent>
             <TextField
               autoFocus
               margin="dense"
               id="name"
-              label="اسم "
+              label="اسم"
               name="name"
               aria-describedby="emailHelp"
-              value={file_.name}
+              value={slider_.name}
               fullWidth
               onChange={(e) => {
                 e.preventDefault();
                 console.log(e.target.value);
-                setFile_({ ...file_, name: e.target.value });
+                setSlider_({ ...slider_, name: e.target.value });
               }}
             />
-
             <div class="form-group w-20 fmgp">
               <input
                 type="file"
@@ -339,28 +317,9 @@ const Tables = () => {
                 }}
               />
             </div>
-            <div class="select-dropdown">
-              <select
-                class="form-control"
-                onChange={(e) => {
-                  console.log(e.target.value);
-                  setFile_({ ...file_, unitId: e.target.value });
-                }}
-              >
-                <hr />
-
-                <option selected disabled>
-                  اختار الشهر
-                </option>
-                {units.map((unit) => (
-                  <option value={unit.id}>{unit.name}</option>
-                ))}
-              </select>
-            </div>
           </DialogContent>
           <DialogActions>
             <Button
-              disabled={enable}
               onClick={(e) => {
                 handleClose();
                 put();
@@ -368,7 +327,7 @@ const Tables = () => {
             >
               حفظ
             </Button>
-            <Button variant="primary" onClick={handleClose_}>
+            <Button variant="primary" onClick={handleClose}>
               رجوع
             </Button>
           </DialogActions>
@@ -378,4 +337,16 @@ const Tables = () => {
   );
 };
 
-export default Tables;
+export default Dashboard;
+
+// Data
+
+function Tables() {
+  return (
+    <DashboardLayout>
+      <DashboardNavbar />
+      <MDBox pt={6} pb={3}></MDBox>
+      {/* <Footer /> */}
+    </DashboardLayout>
+  );
+}

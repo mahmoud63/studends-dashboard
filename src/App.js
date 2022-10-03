@@ -75,7 +75,8 @@ export default function App() {
   let navigate = useNavigate();
 
   useEffect(() => {
-    localStorage.getItem("students-app-token").length < 10
+    !localStorage.getItem("students-app-token") ||
+    localStorage.getItem("students-app-token").length < 2
       ? navigate("/authentication/sign-in")
       : "";
   }, [location]);

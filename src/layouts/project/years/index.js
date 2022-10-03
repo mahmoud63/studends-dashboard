@@ -79,7 +79,7 @@ const Dashboard = () => {
     axios({
       method: "get",
       headers: { Authorization: `Bearer ${localStorage.getItem("students-app-token")}` },
-      url: `https://students-01.herokuapp.com/api/year/`,
+      url: `https://api.students.blankweb.online/api/year/`,
     }).then((result) => {
       let da = result.data.years.reverse();
 
@@ -93,7 +93,7 @@ const Dashboard = () => {
     axios({
       method: "delete",
       headers: { Authorization: `Bearer ${localStorage.getItem("students-app-token")}` },
-      url: `https://students-01.herokuapp.com/api/year/`,
+      url: `https://api.students.blankweb.online/api/year/`,
       data: { id: id },
     }).then((result) => {
       getyears();
@@ -104,7 +104,7 @@ const Dashboard = () => {
     axios({
       method: "post",
       headers: { Authorization: `Bearer ${localStorage.getItem("students-app-token")}` },
-      url: `https://students-01.herokuapp.com/api/year/`,
+      url: `https://api.students.blankweb.online/api/year/`,
       data: { ...year },
     }).then((result) => {
       getyears();
@@ -115,7 +115,7 @@ const Dashboard = () => {
     axios({
       method: "put",
       headers: { Authorization: `Bearer ${localStorage.getItem("students-app-token")}` },
-      url: `https://students-01.herokuapp.com/api/year/`,
+      url: `https://api.students.blankweb.online/api/year/`,
       data: yearـ,
     }).then((result) => {
       setShow_(false);

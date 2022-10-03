@@ -13,7 +13,8 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 // react-router-dom components
 // import { Link } from "react-router-dom";
@@ -40,10 +41,32 @@ function Basic() {
 
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
 
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   let navigate = useNavigate();
-  const handleOnSubmit = () => {
-    localStorage.setItem("students-app-token", "fasmkdfmlasdkfmasldekm");
-    navigate(`/dashboard`);
+
+  useEffect(() => {
+    if (
+      localStorage.getItem("students-app-token") &&
+      localStorage.getItem("students-app-token").length > 10
+    ) {
+      navigate(`/dashboard`);
+    }
+  }, []);
+
+  const handleOnSubmit = (e) => {
+    console.log(e);
+    axios({
+      method: "post",
+      url: `https://api.students.blankweb.online/api/auth/signin/`,
+      data: { email, password },
+    }).then((result) => {
+      console.log(result);
+
+      localStorage.setItem("students-app-token", result.data.token);
+
+      navigate(`/dashboard`);
+    });
   };
 
   return (
@@ -61,29 +84,30 @@ function Basic() {
           textAlign="center"
         >
           <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-            Sign in
+            تسجيل دخول
           </MDTypography>
         </MDBox>
         <MDBox pt={4} pb={3} px={3}>
           <MDBox component="form" role="form">
             <MDBox mb={2}>
-              <MDInput type="email" label="Email" fullWidth />
+              <MDInput
+                type="email"
+                label="البريد الالكتروني"
+                fullWidth
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
             </MDBox>
             <MDBox mb={2}>
-              <MDInput type="password" label="Password" fullWidth />
+              <MDInput
+                type="password"
+                label="كلمة السر"
+                fullWidth
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
             </MDBox>
-            <MDBox display="flex" alignItems="center" ml={-1}>
-              <Switch checked={rememberMe} onChange={handleSetRememberMe} />
-              <MDTypography
-                variant="button"
-                fontWeight="regular"
-                color="text"
-                onClick={handleSetRememberMe}
-                sx={{ cursor: "pointer", userSelect: "none", ml: -1 }}
-              >
-                &nbsp;&nbsp;Remember me
-              </MDTypography>
-            </MDBox>
+            <MDBox display="flex" alignItems="center" ml={-1}></MDBox>
             <MDBox mt={4} mb={1}>
               <MDButton variant="gradient" color="info" fullWidth onClick={handleOnSubmit}>
                 sign in

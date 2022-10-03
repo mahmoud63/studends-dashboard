@@ -1,40 +1,119 @@
-/**
-=========================================================
-* Material Dashboard 2 React - v2.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
-// @mui material components
-import Grid from "@mui/material/Grid";
-import Card from "@mui/material/Card";
-
 // Material Dashboard 2 React components
+import React, { useState, useEffect } from "react";
 import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
-
-// Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-import Footer from "examples/Footer";
-import DataTable from "examples/Tables/DataTable";
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import { styled } from "@mui/material/styles";
 
-// Data
+import Typography from "@mui/material/Typography";
+import ButtonBase from "@mui/material/ButtonBase";
+import axios from "axios";
+
+const Img = styled("img")({
+  margin: "auto",
+  display: "block",
+  maxWidth: "100%",
+  maxHeight: "100%",
+});
 
 function Tables() {
+  const [show, setShow] = useState(false);
+
+  const [receipt, setReceipt] = useState([]);
+
+  useEffect(() => {
+    getReceipt();
+  }, []);
+
+  const getReceipt = () => {
+    axios({
+      method: "get",
+      headers: { Authorization: `Bearer ${localStorage.getItem("students-app-token")}` },
+      url: `https://api.students.blankweb.online/api/receipt/`,
+    }).then((result) => {
+      let da = result.data.receipts.reverse();
+
+      console.log(da);
+      setReceipt([]);
+      setReceipt(da);
+    });
+  };
+
+  const put = (body) => {
+    axios({
+      method: "put",
+      headers: { Authorization: `Bearer ${localStorage.getItem("students-app-token")}` },
+      url: `https://api.students.blankweb.online/api/receipt/`,
+      data: body,
+    }).then((result) => {
+      getReceipt();
+    });
+  };
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
-      <MDBox pt={6} pb={3}></MDBox>
-      {/* <Footer /> */}
+      <MDBox
+        pt={6}
+        pb={3}
+        sx={{
+          display: "flex",
+          flexWrap: "wrap",
+        }}
+      >
+        {receipt.map((r) => (
+          <Paper
+            sx={{
+              p: 2,
+              margin: 2,
+              flexGrow: 1,
+              maxWidth: 590,
+              backgroundColor:
+                r.status == "APPROVED" ? "#bad9bd" : r.status == "DECLINED" ? "#deaca2" : "white",
+            }}
+          >
+            <Grid container spacing={2}>
+              <Grid item>
+                <ButtonBase sx={{ width: 300, height: 300 }}>
+                  <a href={r.link} target="_blank">
+                    <Img alt="complex" src={r.link} />
+                  </a>
+                </ButtonBase>
+              </Grid>
+              <Grid item xs={12} sm container>
+                <Grid item xs container direction="column" spacing={2}>
+                  <Grid item xs>
+                    <Typography gutterBottom variant="subtitle1" component="div">
+                      {new Date(r.createdAt).toLocaleDateString()}
+                    </Typography>
+                  </Grid>
+                  <Grid item>
+                    <Button
+                      onClick={(e) => {
+                        put({ id: r.id, status: "APPROVED" });
+                      }}
+                    >
+                      قبول
+                    </Button>
+                    <Button
+                      variant="danger"
+                      onClick={() => {
+                        put({ id: r.id, status: "DECLINED" });
+                      }}
+                    >
+                      رفض
+                    </Button>
+                  </Grid>
+                </Grid>
+              </Grid>
+            </Grid>
+          </Paper>
+        ))}
+      </MDBox>
     </DashboardLayout>
   );
 }

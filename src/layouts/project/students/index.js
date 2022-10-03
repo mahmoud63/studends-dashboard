@@ -95,7 +95,7 @@ const Dashboard = () => {
     axios({
       method: "get",
       headers: { Authorization: `Bearer ${localStorage.getItem("students-app-token")}` },
-      url: `https://students-01.herokuapp.com/api/student/${id || -1}`,
+      url: `https://api.students.blankweb.online/api/student/${id || -1}`,
     }).then((result) => {
       let da = result.data.students;
 
@@ -109,7 +109,7 @@ const Dashboard = () => {
     axios({
       method: "get",
       headers: { Authorization: `Bearer ${localStorage.getItem("students-app-token")}` },
-      url: `https://students-01.herokuapp.com/api/year/`,
+      url: `https://api.students.blankweb.online/api/year/`,
     }).then((result) => {
       let da = result.data.years.reverse();
 
@@ -123,7 +123,7 @@ const Dashboard = () => {
     axios({
       method: "delete",
       headers: { Authorization: `Bearer ${localStorage.getItem("students-app-token")}` },
-      url: `https://students-01.herokuapp.com/api/student/`,
+      url: `https://api.students.blankweb.online/api/student/`,
       data: { id: id },
     }).then((result) => {
       getdata();
@@ -134,7 +134,7 @@ const Dashboard = () => {
     axios({
       method: "post",
       headers: { Authorization: `Bearer ${localStorage.getItem("students-app-token")}` },
-      url: `https://students-01.herokuapp.com/api/student/activate`,
+      url: `https://api.students.blankweb.online/api/student/activate`,
       data: { id: id },
     }).then((result) => {
       getdata();
@@ -145,7 +145,7 @@ const Dashboard = () => {
     axios({
       method: "post",
       headers: { Authorization: `Bearer ${localStorage.getItem("students-app-token")}` },
-      url: `https://students-01.herokuapp.com/api/student/deactivate`,
+      url: `https://api.students.blankweb.online/api/student/deactivate`,
       data: { id: id },
     }).then((result) => {
       getdata();
@@ -156,7 +156,7 @@ const Dashboard = () => {
     axios({
       method: "post",
       headers: { Authorization: `Bearer ${localStorage.getItem("students-app-token")}` },
-      url: `https://students-01.herokuapp.com/api/student/`,
+      url: `https://api.students.blankweb.online/api/student/`,
       data: { ...student },
     }).then((result) => {
       getdata();
@@ -167,7 +167,7 @@ const Dashboard = () => {
     axios({
       method: "put",
       headers: { Authorization: `Bearer ${localStorage.getItem("students-app-token")}` },
-      url: `https://students-01.herokuapp.com/api/student/`,
+      url: `https://api.students.blankweb.online/api/student/`,
       data: studentـ,
     }).then((result) => {
       setShow_(false);

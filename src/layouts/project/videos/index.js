@@ -1,42 +1,351 @@
-/**
-=========================================================
-* Material Dashboard 2 React - v2.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
-// @mui material components
-import Grid from "@mui/material/Grid";
-import Card from "@mui/material/Card";
-
-// Material Dashboard 2 React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
-
-// Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-import Footer from "examples/Footer";
-import DataTable from "examples/Tables/DataTable";
 
-// Data
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import MaterialTable from "material-table";
 
-function Tables() {
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
+
+const Tables = () => {
+  const [data, setData] = useState([]);
+  const [units, setUnits] = useState([]);
+
+  const [lesson, setLesson] = useState({
+    name: "",
+    link: "",
+    unit: "",
+    youtubeId: "",
+  });
+
+  const [unit, setUnit] = useState(0);
+
+  const [lesson_, setLesson_] = useState({
+    id: 0,
+    name: "",
+    link: "",
+    unit: "",
+    youtubeId: "",
+  });
+  const [show, setShow] = useState(false);
+  const [show_, setShow_] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleClose_ = () => setShow_(false);
+
+  const handleShow = () => setShow(true);
+
+  useEffect(() => {
+    getdata();
+    getUnits();
+  }, []);
+
+  const getdata = () => {
+    let search = window.location.search;
+    let params = new URLSearchParams(search);
+    let id = params.get("unitId");
+    axios({
+      method: "get",
+      headers: { Authorization: `Bearer ${localStorage.getItem("students-app-token")}` },
+      url: `https://api.students.blankweb.online/api/lesson/${id || -1}`,
+    }).then((result) => {
+      let da = result.data.lessons;
+
+      console.log(da);
+      setData([]);
+      setData(da);
+    });
+  };
+
+  const getUnits = () => {
+    axios({
+      method: "get",
+      headers: { Authorization: `Bearer ${localStorage.getItem("students-app-token")}` },
+      url: `https://api.students.blankweb.online/api/unit/-1`,
+    }).then((result) => {
+      let da = result.data.units;
+
+      console.log(da);
+
+      setUnits([]);
+      setUnits(da);
+    });
+  };
+
+  const delet = (lesson) => {
+    console.log(lesson);
+    axios({
+      method: "delete",
+      headers: { Authorization: `Bearer ${localStorage.getItem("students-app-token")}` },
+      url: `https://api.students.blankweb.online/api/lesson/`,
+      data: { id: lesson },
+    }).then((result) => {
+      getdata();
+    });
+  };
+
+  const add = (e) => {
+    // e.preventDefault();
+
+    console.log(lesson);
+    axios({
+      method: "post",
+      headers: { Authorization: `Bearer ${localStorage.getItem("students-app-token")}` },
+      url: `https://api.students.blankweb.online/api/lesson/`,
+      data: { ...lesson },
+    }).then((result) => {
+      console.log(result);
+      getdata();
+      handleClose();
+    });
+  };
+
+  const put = (e) => {
+    axios({
+      method: "put",
+      headers: { Authorization: `Bearer ${localStorage.getItem("students-app-token")}` },
+      url: `https://api.students.blankweb.online/api/lesson/`,
+      data: { ...lesson_ },
+    }).then((result) => {
+      getdata();
+      handleClose_();
+    });
+  };
   return (
     <DashboardLayout>
       <DashboardNavbar />
-      <MDBox pt={6} pb={3}></MDBox>
-      {/* <Footer /> */}
+      <div style={{ width: "100%" }}>
+        <MaterialTable
+          style={{ backgroundColor: "#eff2f5" }}
+          title=" فيديو"
+          columns={[
+            { title: "الاسم", field: "name" },
+            {
+              title: "البريد الالكتروني",
+              field: "link",
+              render: (data) => {
+                // console.log(data, years);
+                let y = units.find((i) => data.unitId == i.id);
+
+                return <p>{y?.name}</p>;
+              },
+            },
+            {
+              title: "البريد الالكتروني",
+              field: "email",
+              render: (data) => {
+                // console.log(data, years);
+
+                return (
+                  <a target="_blank" href={data?.link}>
+                    {data?.link.slice(0, 30)}
+                  </a>
+                );
+              },
+            },
+          ]}
+          data={data}
+          actions={[
+            {
+              icon: "edit",
+              onClick: (event, rowData) => {
+                setLesson_({ ...rowData });
+                setShow_(true);
+              },
+            },
+            {
+              icon: "delete",
+              tooltip: "Delete User",
+              onClick: (event, rowData) => delet(rowData.id),
+            },
+
+            {
+              icon: "add",
+              tooltip: "Add User",
+              isFreeAction: true,
+              onClick: (event) => setShow(true),
+            },
+          ]}
+          options={{
+            actionsColumnIndex: -1,
+            exportButton: true,
+            pageSize: 20,
+            headerStyle: { display: "none" },
+          }}
+        />
+
+        <Dialog open={show} onClose={handleClose}>
+          <DialogTitle>اضافة فيديو</DialogTitle>
+          <DialogContent>
+            <TextField
+              autoFocus
+              margin="dense"
+              id="name"
+              label="اسم "
+              name="name"
+              aria-describedby="emailHelp"
+              value={lesson.name}
+              fullWidth
+              onChange={(e) => {
+                e.preventDefault();
+                console.log(e.target.value);
+                setLesson({ ...lesson, name: e.target.value });
+              }}
+            />
+            <TextField
+              autoFocus
+              margin="dense"
+              id="link"
+              label="رابط الفديو "
+              name="link"
+              aria-describedby="emailHelp"
+              value={lesson.link}
+              fullWidth
+              onChange={(e) => {
+                e.preventDefault();
+                console.log(e.target.value);
+                setLesson({ ...lesson, link: e.target.value });
+              }}
+            />{" "}
+            <TextField
+              autoFocus
+              margin="dense"
+              id="youtubeId"
+              label="youtube Id "
+              name="youtubeId"
+              aria-describedby="emailHelp"
+              value={lesson.youtubeId}
+              fullWidth
+              onChange={(e) => {
+                e.preventDefault();
+                console.log(e.target.value);
+                setLesson({ ...lesson, youtubeId: e.target.value });
+              }}
+            />
+            <div class="select-dropdown">
+              <select
+                class="form-control"
+                onChange={(e) => {
+                  console.log(e.target.value);
+                  setLesson({ ...lesson, unit: e.target.value });
+                }}
+              >
+                <hr />
+
+                <option selected disabled>
+                  اختار الشهر
+                </option>
+                {units.map((unit) => (
+                  <option value={unit.id}>{unit.name}</option>
+                ))}
+              </select>
+            </div>
+          </DialogContent>
+          <DialogActions>
+            <Button
+              onClick={(e) => {
+                handleClose();
+                add();
+              }}
+            >
+              حفظ
+            </Button>
+            <Button variant="primary" onClick={handleClose}>
+              رجوع
+            </Button>
+          </DialogActions>
+        </Dialog>
+
+        <Dialog open={show_} onClose={handleClose_}>
+          <DialogTitle>تعديل فيديو </DialogTitle>
+          <DialogContent>
+            <TextField
+              autoFocus
+              margin="dense"
+              id="name"
+              label="اسم "
+              name="name"
+              aria-describedby="emailHelp"
+              value={lesson_.name}
+              fullWidth
+              onChange={(e) => {
+                e.preventDefault();
+                console.log(e.target.value);
+                setLesson_({ ...lesson_, name: e.target.value });
+              }}
+            />
+            <TextField
+              autoFocus
+              margin="dense"
+              id="link"
+              label="رابط الفديو "
+              name="link"
+              aria-describedby="emailHelp"
+              value={lesson_.link}
+              fullWidth
+              onChange={(e) => {
+                e.preventDefault();
+                console.log(e.target.value);
+                setLesson_({ ...lesson_, link: e.target.value });
+              }}
+            />{" "}
+            <TextField
+              autoFocus
+              margin="dense"
+              id="youtubeId"
+              label="youtube Id "
+              name="youtubeId"
+              aria-describedby="emailHelp"
+              value={lesson_.youtubeId}
+              fullWidth
+              onChange={(e) => {
+                e.preventDefault();
+                console.log(e.target.value);
+                setLesson_({ ...lesson_, youtubeId: e.target.value });
+              }}
+            />
+            <div class="select-dropdown">
+              <select
+                class="form-control"
+                onChange={(e) => {
+                  console.log(e.target.value);
+                  setLesson_({ ...lesson_, unit: e.target.value });
+                }}
+              >
+                <hr />
+
+                <option selected disabled>
+                  اختار الشهر
+                </option>
+                {units.map((unit) => (
+                  <option value={unit.id}>{unit.name}</option>
+                ))}
+              </select>
+            </div>
+          </DialogContent>
+          <DialogActions>
+            <Button
+              onClick={(e) => {
+                handleClose();
+                put();
+              }}
+            >
+              حفظ
+            </Button>
+            <Button variant="primary" onClick={handleClose_}>
+              رجوع
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </div>
     </DashboardLayout>
   );
-}
+};
 
 export default Tables;

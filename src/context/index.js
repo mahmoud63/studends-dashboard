@@ -72,11 +72,11 @@ function reducer(state, action) {
 function MaterialUIControllerProvider({ children }) {
   const initialState = {
     miniSidenav: true,
-    transparentSidenav: true,
+    transparentSidenav: false,
     whiteSidenav: false,
     sidenavColor: "info",
     transparentNavbar: true,
-    fixedNavbar: true,
+    fixedNavbar: false,
     openConfigurator: false,
     direction: "rtl",
     layout: "sign-in",

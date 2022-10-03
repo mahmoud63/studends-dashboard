@@ -30,6 +30,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 
 import AWS from "aws-sdk";
+import { Input } from "@mui/material";
 
 const Dashboard = () => {
   const spacesEndpoint = new AWS.Endpoint("fra1.digitaloceanspaces.com");
@@ -75,7 +76,7 @@ const Dashboard = () => {
     axios({
       method: "get",
       headers: { Authorization: `Bearer ${localStorage.getItem("students-app-token")}` },
-      url: `https://students-01.herokuapp.com/api/year/`,
+      url: `https://api.students.blankweb.online/api/year/`,
     }).then((result) => {
       let da = result.data.years.reverse();
 
@@ -89,7 +90,7 @@ const Dashboard = () => {
     axios({
       method: "get",
       headers: { Authorization: `Bearer ${localStorage.getItem("students-app-token")}` },
-      url: `https://students-01.herokuapp.com/api/unit/-1`,
+      url: `https://api.students.blankweb.online/api/unit/-1`,
     }).then((result) => {
       let da = result.data.units.reverse();
 
@@ -103,7 +104,7 @@ const Dashboard = () => {
     axios({
       method: "delete",
       headers: { Authorization: `Bearer ${localStorage.getItem("students-app-token")}` },
-      url: `https://students-01.herokuapp.com/api/unit/`,
+      url: `https://api.students.blankweb.online/api/unit/`,
       data: { id: id },
     }).then((result) => {
       getUnits();
@@ -114,7 +115,7 @@ const Dashboard = () => {
     axios({
       method: "post",
       headers: { Authorization: `Bearer ${localStorage.getItem("students-app-token")}` },
-      url: `https://students-01.herokuapp.com/api/unit/`,
+      url: `https://api.students.blankweb.online/api/unit/`,
       data: { ...unit },
     }).then((result) => {
       getUnits();
@@ -125,7 +126,7 @@ const Dashboard = () => {
     axios({
       method: "put",
       headers: { Authorization: `Bearer ${localStorage.getItem("students-app-token")}` },
-      url: `https://students-01.herokuapp.com/api/unit/`,
+      url: `https://api.students.blankweb.online/api/unit/`,
       data: unitـ,
     }).then((result) => {
       setShow_(false);
@@ -137,8 +138,13 @@ const Dashboard = () => {
     console.log("start");
     if (e.target.files && e.target.files[0]) {
       const blob = e.target.files[0];
-      const params = { Body: blob, Bucket: `student-unit-image`, Key: blob.name };
-      // Sending the file to the Spaces
+      const imageName = new Date().getTime() + blob.name;
+      const params = {
+        Body: blob,
+        Bucket: `student-unit-image`,
+        Key: imageName,
+        ACL: "public-read-write",
+      }; // Sending the file to the Spaces
       s3.putObject(params)
         .on("build", (request) => {
           request.httpRequest.headers.Host =
@@ -152,32 +158,41 @@ const Dashboard = () => {
           if (err) console.log(err);
           else {
             // If there is no error updating the editor with the imageUrl
-            const imageUrl = "https://student-unit-image.fra1.digitaloceanspaces.com" + blob.name;
-            callback(imageUrl, blob.name);
+            const imageUrl = "https://student-unit-image.fra1.digitaloceanspaces.com/" + imageName;
+            console.log(imageUrl);
+            setUnit({ ...unit, image: imageUrl });
           }
         });
     }
   };
 
   const upload_ = (e) => {
+    console.log("start");
     if (e.target.files && e.target.files[0]) {
       const blob = e.target.files[0];
-      const params = { Body: blob, Bucket: `student-unit-image`, Key: blob.name };
-      // Sending the file to the Spaces
+      const imageName = new Date().getTime() + blob.name;
+      const params = {
+        Body: blob,
+        Bucket: `student-unit-image`,
+        Key: imageName,
+        ACL: "public-read-write",
+      }; // Sending the file to the Spaces
       s3.putObject(params)
         .on("build", (request) => {
           request.httpRequest.headers.Host =
-            "https://student-unit-image.fra1.digitaloceanspaces.com";
+            "http://student-unit-image.fra1.digitaloceanspaces.com";
           request.httpRequest.headers["Content-Length"] = blob.size;
           request.httpRequest.headers["Content-Type"] = blob.type;
           request.httpRequest.headers["x-amz-acl"] = "public-read";
+          request.httpRequest.headers["Access-Control-Allow-Origin"] = "*";
         })
         .send((err) => {
-          if (err) errorCallback();
+          if (err) console.log(err);
           else {
             // If there is no error updating the editor with the imageUrl
-            const imageUrl = "https://student-unit-image.fra1.digitaloceanspaces.com" + blob.name;
-            callback(imageUrl, blob.name);
+            const imageUrl = "https://student-unit-image.fra1.digitaloceanspaces.com/" + imageName;
+            console.log(imageUrl);
+            setUnitـ(imageUrl);
           }
         });
     }
@@ -281,22 +296,24 @@ const Dashboard = () => {
             </div>
 
             <label for="exampleInputEmail1">اسم المرحله</label>
-            <select
-              class="form-control"
-              onChange={(e) => {
-                console.log(e.target.value);
-                setUnit({ ...unit, year: e.target.value });
-              }}
-            >
-              <hr />
+            <div class="select-dropdown">
+              <select
+                class="form-control"
+                onChange={(e) => {
+                  console.log(e.target.value);
+                  setUnit({ ...unit, year: e.target.value });
+                }}
+              >
+                <hr />
 
-              <option selected disabled>
-                اختار المرحلة التعليمية
-              </option>
-              {years.map((year) => (
-                <option value={year.id}>{year.name}</option>
-              ))}
-            </select>
+                <option selected disabled>
+                  اختار المرحلة التعليمية
+                </option>
+                {years.map((year) => (
+                  <option value={year.id}>{year.name}</option>
+                ))}
+              </select>
+            </div>
           </DialogContent>
           <DialogActions>
             <Button
@@ -346,31 +363,34 @@ const Dashboard = () => {
               }}
             />
 
-            <input
+            <img src={unitـ.image} />
+
+            <Input
               type="file"
-              style={{ fontSize: 18, display: "inline" }}
               onChange={(e) => {
                 upload_(e);
               }}
             />
             <hr />
             <label for="exampleInputEmail1">اسم المرحله</label>
-            <select
-              class="form-control"
-              onChange={(e) => {
-                console.log(e.target.value);
-                setUnitـ({ ...unitـ, year: e.target.value });
-              }}
-            >
-              <option selected disabled>
-                اختار المرحلة التعليمية
-              </option>
-              {years.map((year) => (
-                <option value={year.id} selected={year.id == unitـ.year}>
-                  {year.name}
+            <div class="select-dropdown">
+              <select
+                class="form-control"
+                onChange={(e) => {
+                  console.log(e.target.value);
+                  setUnitـ({ ...unitـ, year: e.target.value });
+                }}
+              >
+                <option selected disabled>
+                  اختار المرحلة التعليمية
                 </option>
-              ))}
-            </select>
+                {years.map((year) => (
+                  <option value={year.id} selected={year.id == unitـ.year}>
+                    {year.name}
+                  </option>
+                ))}
+              </select>
+            </div>
           </DialogContent>
           <DialogActions>
             <Button

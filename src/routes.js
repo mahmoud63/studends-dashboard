@@ -47,6 +47,8 @@ import Videos from "layouts/project/videos";
 import Exams from "layouts/project/exams";
 
 import Receipt from "layouts/project/receipt";
+import Questions from "layouts/project/questions";
+import Slider from "layouts/project/sliders";
 
 import SignIn from "layouts/authentication/sign-in";
 
@@ -61,6 +63,16 @@ const routes = [
     icon: <Icon fontSize="medium">dashboard</Icon>,
     route: "/dashboard",
     component: <Dashboard />,
+    privateRoute: true,
+  },
+
+  {
+    type: "collapse",
+    name: "اعلانات",
+    key: "sliders",
+    icon: <Icon fontSize="medium">dashboard</Icon>,
+    route: "/sliders",
+    component: <Slider />,
     privateRoute: true,
   },
 
@@ -116,6 +128,15 @@ const routes = [
     icon: <Icon fontSize="medium">listAlt</Icon>,
     route: "/exams",
     component: <Exams />,
+    privateRoute: true,
+  },
+  {
+    type: "collapse",
+    name: "أسئلة",
+    key: "questions",
+    icon: <Icon fontSize="medium">help</Icon>,
+    route: "/questions",
+    component: <Questions />,
     privateRoute: true,
   },
   {
