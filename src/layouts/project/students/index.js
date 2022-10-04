@@ -59,16 +59,20 @@ const Dashboard = () => {
     phone: "",
     password: "",
     active: "",
+    deviceId: "",
+
     year: "",
   });
 
-  const [studentـ, setStudentـ] = useState({
+  const [student_, setStudent_] = useState({
     id: 0,
     name: "",
     email: "",
     phone: "",
     password: "",
     active: "",
+    deviceId: "",
+
     year: "",
   });
 
@@ -168,7 +172,7 @@ const Dashboard = () => {
       method: "put",
       headers: { Authorization: `Bearer ${localStorage.getItem("students-app-token")}` },
       url: `https://api.students.blankweb.online/api/student/`,
-      data: studentـ,
+      data: student_,
     }).then((result) => {
       setShow_(false);
       getdata();
@@ -198,7 +202,7 @@ const Dashboard = () => {
               icon: "edit",
               tooltip: "Save User",
               onClick: (event, rowData) => {
-                setStudentـ({ ...rowData });
+                setStudent_({ ...rowData });
                 setShow_(true);
               },
             },
@@ -296,6 +300,20 @@ const Dashboard = () => {
                 setStudent({ ...student, password: e.target.value });
               }}
             />
+            <TextField
+              autoFocus
+              margin="dense"
+              id="password"
+              label=" كود الجهاز"
+              name="deviceId"
+              aria-describedby="emailHelp"
+              value={student.deviceId}
+              fullWidth
+              onChange={(e) => {
+                e.preventDefault();
+                setStudent({ ...student, deviceId: e.target.value });
+              }}
+            />
 
             <form class=" ml-5 mr-5 w-20 ext-right" onSubmit={add}>
               <div class="form-group w-20 fmgp">
@@ -342,12 +360,12 @@ const Dashboard = () => {
               label="اسم الطالب"
               name="name"
               aria-describedby="emailHelp"
-              value={studentـ.name}
+              value={student_.name}
               fullWidth
               onChange={(e) => {
                 e.preventDefault();
                 console.log(e.target.value);
-                setStudent_({ ...studentـ, name: e.target.value });
+                setStudent_({ ...student_, name: e.target.value });
               }}
             />
 
@@ -358,11 +376,11 @@ const Dashboard = () => {
               label="هاتف الطالب"
               name="phone"
               aria-describedby="emailHelp"
-              value={studentـ.phone}
+              value={student_.phone}
               fullWidth
               onChange={(e) => {
                 e.preventDefault();
-                setStudent_({ ...studentـ, phone: e.target.value });
+                setStudent_({ ...student_, phone: e.target.value });
               }}
             />
 
@@ -373,11 +391,11 @@ const Dashboard = () => {
               label="ايميل الطالب"
               name="email"
               aria-describedby="emailHelp"
-              value={studentـ.email}
+              value={student_.email}
               fullWidth
               onChange={(e) => {
                 e.preventDefault();
-                setStudent_({ ...studentـ, email: e.target.value });
+                setStudent_({ ...student_, email: e.target.value });
               }}
             />
 
@@ -388,11 +406,26 @@ const Dashboard = () => {
               label="باسورد الطالب"
               name="password"
               aria-describedby="emailHelp"
-              value={studentـ.password}
+              value={student_.password}
               fullWidth
               onChange={(e) => {
                 e.preventDefault();
-                setStudent_({ ...studentـ, password: e.target.value });
+                setStudent_({ ...student_, password: e.target.value });
+              }}
+            />
+
+            <TextField
+              autoFocus
+              margin="dense"
+              id="password"
+              label=" كود الجهاز"
+              name="deviceId"
+              aria-describedby="emailHelp"
+              value={student_.deviceId}
+              fullWidth
+              onChange={(e) => {
+                e.preventDefault();
+                setStudent_({ ...student_, deviceId: e.target.value });
               }}
             />
 
@@ -403,7 +436,7 @@ const Dashboard = () => {
                   class="form-control"
                   onChange={(e) => {
                     console.log(e.target.value);
-                    setStudent_({ ...studentـ, year: e.target.value });
+                    setStudent_({ ...student_, year: e.target.value });
                   }}
                 >
                   <option selected disabled>
