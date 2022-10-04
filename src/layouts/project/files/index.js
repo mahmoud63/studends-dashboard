@@ -108,6 +108,17 @@ const Tables = () => {
     }).then((result) => {
       console.log(result);
       getdata();
+      setFile({
+        name: "",
+        link: "",
+        unitId: "",
+      });
+      setFile_({
+        id: 0,
+        name: "",
+        link: "",
+        unitId: "",
+      });
       handleClose();
     });
   };
@@ -121,6 +132,18 @@ const Tables = () => {
     }).then((result) => {
       getdata();
       handleClose_();
+
+      setFile({
+        name: "",
+        link: "",
+        unitId: "",
+      });
+      setFile_({
+        id: 0,
+        name: "",
+        link: "",
+        unitId: "",
+      });
     });
   };
 

@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.d416d677.css",
-    "main.js": "/static/js/main.ac690155.js",
+    "main.js": "/static/js/main.e754291d.js",
     "static/js/498.c5abbf02.chunk.js": "/static/js/498.c5abbf02.chunk.js",
     "static/js/703.698d85c8.chunk.js": "/static/js/703.698d85c8.chunk.js",
     "static/js/541.a48e44d4.chunk.js": "/static/js/541.a48e44d4.chunk.js",
@@ -18,13 +18,13 @@
     "static/media/logo-atlassian.svg": "/static/media/logo-atlassian.f2b0e8570a4b4ce768854ff3dad1a6e1.svg",
     "index.html": "/index.html",
     "main.d416d677.css.map": "/static/css/main.d416d677.css.map",
-    "main.ac690155.js.map": "/static/js/main.ac690155.js.map",
+    "main.e754291d.js.map": "/static/js/main.e754291d.js.map",
     "498.c5abbf02.chunk.js.map": "/static/js/498.c5abbf02.chunk.js.map",
     "703.698d85c8.chunk.js.map": "/static/js/703.698d85c8.chunk.js.map",
     "541.a48e44d4.chunk.js.map": "/static/js/541.a48e44d4.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.d416d677.css",
-    "static/js/main.ac690155.js"
+    "static/js/main.e754291d.js"
   ]
 }

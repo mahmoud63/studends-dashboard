@@ -74,6 +74,7 @@ function Tables() {
     }).then((result) => {
       setShow(false);
       getquestions();
+      setQuestion({ question: "", answer: "", id: "" });
     });
   };
 

@@ -164,6 +164,30 @@ const Dashboard = () => {
       data: { ...student },
     }).then((result) => {
       getdata();
+      setShow_(false);
+      setShow(false);
+      setStudent({
+        id: 0,
+        name: "",
+        email: "",
+        phone: "",
+        password: "",
+        active: "",
+        deviceId: "",
+
+        year: "",
+      });
+      setStudent_({
+        id: 0,
+        name: "",
+        email: "",
+        phone: "",
+        password: "",
+        active: "",
+        deviceId: "",
+
+        year: "",
+      });
     });
   };
 
@@ -175,7 +199,30 @@ const Dashboard = () => {
       data: student_,
     }).then((result) => {
       setShow_(false);
+      setShow(false);
       getdata();
+      setStudent({
+        id: 0,
+        name: "",
+        email: "",
+        phone: "",
+        password: "",
+        active: "",
+        deviceId: "",
+
+        year: "",
+      });
+      setStudent_({
+        id: 0,
+        name: "",
+        email: "",
+        phone: "",
+        password: "",
+        active: "",
+        deviceId: "",
+
+        year: "",
+      });
     });
   };
 

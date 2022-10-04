@@ -103,6 +103,9 @@ const Tables = () => {
       console.log(result);
       getdata();
       handleClose();
+
+      setLesson({ id: 0, name: "", link: "", unit: "", youtubeId: "" });
+      setLesson_({ id: 0, name: "", link: "", unit: "", youtubeId: "" });
     });
   };
 
@@ -115,6 +118,8 @@ const Tables = () => {
     }).then((result) => {
       getdata();
       handleClose_();
+      setLesson({ id: 0, name: "", link: "", unit: "", youtubeId: "" });
+      setLesson_({ id: 0, name: "", link: "", unit: "", youtubeId: "" });
     });
   };
   return (

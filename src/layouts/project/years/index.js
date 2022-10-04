@@ -56,7 +56,7 @@ const Dashboard = () => {
     color: "123",
   });
 
-  const [yearـ, setYearـ] = useState({
+  const [year_, setYear_] = useState({
     id: 0,
     name: "",
     color: "123",
@@ -108,6 +108,10 @@ const Dashboard = () => {
       data: { ...year },
     }).then((result) => {
       getyears();
+      handleClose();
+      handleClose_();
+      setYear({ id: 0, name: "", color: "123" });
+      setYear_({ id: 0, name: "", color: "123" });
     });
   };
 
@@ -116,10 +120,14 @@ const Dashboard = () => {
       method: "put",
       headers: { Authorization: `Bearer ${localStorage.getItem("students-app-token")}` },
       url: `https://api.students.blankweb.online/api/year/`,
-      data: yearـ,
+      data: year_,
     }).then((result) => {
       setShow_(false);
       getyears();
+      handleClose();
+      handleClose_();
+      setYear({ id: 0, name: "", color: "123" });
+      setYear_({ id: 0, name: "", color: "123" });
     });
   };
 
@@ -146,7 +154,7 @@ const Dashboard = () => {
               icon: "edit",
               tooltip: "Save User",
               onClick: (event, rowData) => {
-                setYearـ({ ...rowData });
+                setYear_({ ...rowData });
                 setShow_(true);
               },
             },
@@ -215,12 +223,12 @@ const Dashboard = () => {
               label="اسم السنه"
               name="name"
               aria-describedby="emailHelp"
-              value={yearـ.name}
+              value={year_.name}
               fullWidth
               onChange={(e) => {
                 e.preventDefault();
                 console.log(e.target.value);
-                setYearـ({ ...yearـ, name: e.target.value });
+                setYear_({ ...year_, name: e.target.value });
               }}
             />
           </DialogContent>

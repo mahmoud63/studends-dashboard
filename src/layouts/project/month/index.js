@@ -28,6 +28,8 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
 
 import AWS from "aws-sdk";
 import { Input } from "@mui/material";
@@ -48,15 +50,19 @@ const Dashboard = () => {
     image: "",
     year: "",
     disc: "",
+    active: false,
   });
 
-  const [unitـ, setUnitـ] = useState({
+  const [unit_, setUnit_] = useState({
     id: 0,
     name: "",
     image: "",
     year: "",
     disc: "",
+    active: false,
   });
+
+  const [enable, setEnable] = useState(true);
 
   const [show, setShow] = useState(false);
   const [show_, setShow_] = useState(false);
@@ -119,6 +125,22 @@ const Dashboard = () => {
       data: { ...unit },
     }).then((result) => {
       getUnits();
+      setUnit({
+        id: 0,
+        name: "",
+        image: "",
+        year: "",
+        disc: "",
+        active: false,
+      });
+      setUnit_({
+        id: 0,
+        name: "",
+        image: "",
+        year: "",
+        disc: "",
+        active: false,
+      });
     });
   };
 
@@ -127,10 +149,26 @@ const Dashboard = () => {
       method: "put",
       headers: { Authorization: `Bearer ${localStorage.getItem("students-app-token")}` },
       url: `https://api.students.blankweb.online/api/unit/`,
-      data: unitـ,
+      data: unit_,
     }).then((result) => {
       setShow_(false);
       getUnits();
+      setUnit({
+        id: 0,
+        name: "",
+        image: "",
+        year: "",
+        disc: "",
+        active: false,
+      });
+      setUnit_({
+        id: 0,
+        name: "",
+        image: "",
+        year: "",
+        disc: "",
+        active: false,
+      });
     });
   };
 
@@ -161,6 +199,7 @@ const Dashboard = () => {
             const imageUrl = "https://student-unit-image.fra1.digitaloceanspaces.com/" + imageName;
             console.log(imageUrl);
             setUnit({ ...unit, image: imageUrl });
+            setEnable(false);
           }
         });
     }
@@ -192,7 +231,8 @@ const Dashboard = () => {
             // If there is no error updating the editor with the imageUrl
             const imageUrl = "https://student-unit-image.fra1.digitaloceanspaces.com/" + imageName;
             console.log(imageUrl);
-            setUnitـ(imageUrl);
+            setUnit_({ ...unit_, image: imageUrl });
+            setEnable(false);
           }
         });
     }
@@ -225,7 +265,7 @@ const Dashboard = () => {
               icon: "edit",
               tooltip: "Save User",
               onClick: (event, rowData) => {
-                setUnitـ({ ...rowData });
+                setUnit_({ ...rowData });
                 setShow_(true);
               },
             },
@@ -283,6 +323,19 @@ const Dashboard = () => {
               }}
             />
 
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={unit.active}
+                  onChange={(e) => {
+                    setUnit({ ...unit, active: !unit.active });
+                    console.log(unit);
+                  }}
+                />
+              }
+              label="التفعيل"
+            />
+
             <div class="form-group w-20 fmgp">
               <input
                 type="file"
@@ -317,6 +370,7 @@ const Dashboard = () => {
           </DialogContent>
           <DialogActions>
             <Button
+              disabled={enable}
               onClick={(e) => {
                 handleClose();
                 add();
@@ -331,21 +385,21 @@ const Dashboard = () => {
         </Dialog>
 
         <Dialog open={show_} onClose={handleClose_}>
-          <DialogTitle>تعديل سنه دراسيه</DialogTitle>
+          <DialogTitle>تعديل شهر دراسي</DialogTitle>
           <DialogContent>
             <TextField
               autoFocus
               margin="dense"
               id="name"
-              label="اسم السنه"
+              label="اسم الشهر"
               name="name"
               aria-describedby="emailHelp"
-              value={unitـ.name}
+              value={unit_.name}
               fullWidth
               onChange={(e) => {
                 e.preventDefault();
                 console.log(e.target.value);
-                setUnitـ({ ...unitـ, name: e.target.value });
+                setUnit_({ ...unit_, name: e.target.value });
               }}
             />
             <TextField
@@ -354,17 +408,26 @@ const Dashboard = () => {
               id="name"
               label="وصف "
               name="desc"
-              value={unitـ.disc}
+              value={unit_.disc}
               fullWidth
               onChange={(e) => {
                 e.preventDefault();
                 console.log(e.target.value);
-                setUnitـ({ ...unitـ, disc: e.target.value });
+                setUnit_({ ...unit_, disc: e.target.value });
               }}
             />
 
-            <img src={unitـ.image} />
-
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={unit_.active}
+                  onChange={(e) => {
+                    setUnit_({ ...unit_, active: !unit_.active });
+                  }}
+                />
+              }
+              label="التفعيل"
+            />
             <Input
               type="file"
               onChange={(e) => {
@@ -378,14 +441,14 @@ const Dashboard = () => {
                 class="form-control"
                 onChange={(e) => {
                   console.log(e.target.value);
-                  setUnitـ({ ...unitـ, year: e.target.value });
+                  setUnit_({ ...unit_, year: e.target.value });
                 }}
               >
                 <option selected disabled>
                   اختار المرحلة التعليمية
                 </option>
                 {years.map((year) => (
-                  <option value={year.id} selected={year.id == unitـ.year}>
+                  <option value={year.id} selected={year.id == unit_.year}>
                     {year.name}
                   </option>
                 ))}
@@ -394,6 +457,7 @@ const Dashboard = () => {
           </DialogContent>
           <DialogActions>
             <Button
+              disabled={enable}
               onClick={(e) => {
                 handleClose();
                 put();

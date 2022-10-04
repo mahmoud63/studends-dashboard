@@ -110,6 +110,10 @@ const Dashboard = () => {
       data: { ...slider },
     }).then((result) => {
       getsliders();
+      setSlider({
+        name: "",
+        image: "",
+      });
     });
   };
 
@@ -122,6 +126,11 @@ const Dashboard = () => {
     }).then((result) => {
       setShow_(false);
       getsliders();
+      setSlider({
+        id: 0,
+        name: "",
+        image: "",
+      });
     });
   };
 
