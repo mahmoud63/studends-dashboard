@@ -181,6 +181,8 @@ const Tables = () => {
   };
 
   const upload_ = (e) => {
+    setEnable(true);
+
     console.log("start");
     if (e.target.files && e.target.files[0]) {
       const blob = e.target.files[0];
@@ -244,6 +246,7 @@ const Tables = () => {
               onClick: (event, rowData) => {
                 setFile_({ ...rowData });
                 setShow_(true);
+                setEnable(false);
               },
             },
             {

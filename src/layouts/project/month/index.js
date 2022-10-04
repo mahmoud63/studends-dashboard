@@ -207,6 +207,8 @@ const Dashboard = () => {
 
   const upload_ = (e) => {
     console.log("start");
+    setEnable(true);
+
     if (e.target.files && e.target.files[0]) {
       const blob = e.target.files[0];
       const imageName = new Date().getTime() + blob.name;
@@ -267,6 +269,7 @@ const Dashboard = () => {
               onClick: (event, rowData) => {
                 setUnit_({ ...rowData });
                 setShow_(true);
+                setEnable(false);
               },
             },
             {
