@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.d416d677.css",
-    "main.js": "/static/js/main.e0c646a0.js",
+    "main.css": "/static/css/main.0caf5409.css",
+    "main.js": "/static/js/main.cb3a512e.js",
     "static/js/498.c5abbf02.chunk.js": "/static/js/498.c5abbf02.chunk.js",
     "static/js/703.698d85c8.chunk.js": "/static/js/703.698d85c8.chunk.js",
     "static/js/541.a48e44d4.chunk.js": "/static/js/541.a48e44d4.chunk.js",
@@ -17,14 +17,14 @@
     "static/media/logo-jira.svg": "/static/media/logo-jira.c19fd4e416babfbd0fdb0a794188c601.svg",
     "static/media/logo-atlassian.svg": "/static/media/logo-atlassian.f2b0e8570a4b4ce768854ff3dad1a6e1.svg",
     "index.html": "/index.html",
-    "main.d416d677.css.map": "/static/css/main.d416d677.css.map",
-    "main.e0c646a0.js.map": "/static/js/main.e0c646a0.js.map",
+    "main.0caf5409.css.map": "/static/css/main.0caf5409.css.map",
+    "main.cb3a512e.js.map": "/static/js/main.cb3a512e.js.map",
     "498.c5abbf02.chunk.js.map": "/static/js/498.c5abbf02.chunk.js.map",
     "703.698d85c8.chunk.js.map": "/static/js/703.698d85c8.chunk.js.map",
     "541.a48e44d4.chunk.js.map": "/static/js/541.a48e44d4.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.d416d677.css",
-    "static/js/main.e0c646a0.js"
+    "static/css/main.0caf5409.css",
+    "static/js/main.cb3a512e.js"
   ]
 }

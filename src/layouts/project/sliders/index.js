@@ -247,7 +247,7 @@ const Dashboard = () => {
           options={{
             actionsColumnIndex: -1,
             exportButton: true,
-            pageSize: 20,
+            pageSize: 13,
             headerStyle: { display: "none" },
           }}
         />
@@ -270,9 +270,12 @@ const Dashboard = () => {
                 setSlider({ ...slider, name: e.target.value });
               }}
             />
-            <div class="form-group w-20 fmgp">
+            <label for="images" class="drop-container">
               <input
                 type="file"
+                id="images"
+                accept="image/*"
+                title="اختار ملف"
                 onChange={(e) => {
                   console.log(e.target.files);
                   console.log("------------");
@@ -280,7 +283,7 @@ const Dashboard = () => {
                   upload(e);
                 }}
               />
-            </div>
+            </label>
           </DialogContent>
           <DialogActions>
             <Button
@@ -315,9 +318,12 @@ const Dashboard = () => {
                 setSlider_({ ...slider_, name: e.target.value });
               }}
             />
-            <div class="form-group w-20 fmgp">
+            <label for="images" class="drop-container">
               <input
                 type="file"
+                id="images"
+                accept="image/*"
+                title="اختار ملف"
                 onChange={(e) => {
                   console.log(e.target.files);
                   console.log("------------");
@@ -325,7 +331,7 @@ const Dashboard = () => {
                   upload_(e);
                 }}
               />
-            </div>
+            </label>
           </DialogContent>
           <DialogActions>
             <Button

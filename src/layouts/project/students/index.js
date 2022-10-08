@@ -279,7 +279,7 @@ const Dashboard = () => {
           options={{
             actionsColumnIndex: -1,
             exportButton: true,
-            pageSize: 20,
+            pageSize: 13,
             headerStyle: { display: "none" },
           }}
         />

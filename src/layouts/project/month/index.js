@@ -288,7 +288,7 @@ const Dashboard = () => {
           options={{
             actionsColumnIndex: -1,
             exportButton: true,
-            pageSize: 20,
+            pageSize: 13,
             headerStyle: { display: "none" },
           }}
         />
@@ -339,7 +339,7 @@ const Dashboard = () => {
               label="التفعيل"
             />
 
-            <div class="form-group w-20 fmgp">
+            {/* <div class="form-group w-20 fmgp">
               <input
                 type="file"
                 onChange={(e) => {
@@ -349,7 +349,22 @@ const Dashboard = () => {
                   upload(e);
                 }}
               />
-            </div>
+            </div> */}
+
+            <label for="images" class="drop-container">
+              <input
+                type="file"
+                id="images"
+                accept="image/*"
+                title="اختار ملف"
+                onChange={(e) => {
+                  console.log(e.target.files);
+                  console.log("------------");
+
+                  upload(e);
+                }}
+              />
+            </label>
 
             <label for="exampleInputEmail1">اسم المرحله</label>
             <div class="select-dropdown">
@@ -431,12 +446,20 @@ const Dashboard = () => {
               }
               label="التفعيل"
             />
-            <Input
-              type="file"
-              onChange={(e) => {
-                upload_(e);
-              }}
-            />
+            <label for="images" class="drop-container">
+              <input
+                type="file"
+                id="images"
+                accept="image/*"
+                title="اختار ملف"
+                onChange={(e) => {
+                  console.log(e.target.files);
+                  console.log("------------");
+
+                  uploadـ(e);
+                }}
+              />
+            </label>
             <hr />
             <label for="exampleInputEmail1">اسم المرحله</label>
             <div class="select-dropdown">

@@ -149,10 +149,12 @@ function DashboardNavbar({ absolute, light, isMini }) {
                 size="small"
                 disableRipple
                 color="inherit"
-                sx={navbarIconButton}
-                onClick={handleConfiguratorOpen}
+                sx={navbarMobileMenu}
+                onClick={handleMiniSidenav}
               >
-                <Icon sx={iconsStyle}>settings</Icon>
+                <Icon sx={iconsStyle} fontSize="medium">
+                  {miniSidenav ? "menu_open" : "menu"}
+                </Icon>
               </IconButton>
 
               {renderMenu()}

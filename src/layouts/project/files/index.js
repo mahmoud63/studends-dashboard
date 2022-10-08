@@ -265,7 +265,7 @@ const Tables = () => {
           options={{
             actionsColumnIndex: -1,
             exportButton: true,
-            pageSize: 20,
+            pageSize: 13,
             headerStyle: { display: "none" },
           }}
         />
@@ -288,9 +288,11 @@ const Tables = () => {
                 setFile({ ...file, name: e.target.value });
               }}
             />
-            <div class="form-group w-20 fmgp">
+            <label for="images" class="drop-container">
               <input
                 type="file"
+                id="images"
+                title="اختار ملف"
                 onChange={(e) => {
                   console.log(e.target.files);
                   console.log("------------");
@@ -298,7 +300,7 @@ const Tables = () => {
                   upload(e);
                 }}
               />
-            </div>
+            </label>
 
             <div class="select-dropdown">
               <select
@@ -354,9 +356,11 @@ const Tables = () => {
               }}
             />
 
-            <div class="form-group w-20 fmgp">
+            <label for="images" class="drop-container">
               <input
                 type="file"
+                id="images"
+                title="اختار ملف"
                 onChange={(e) => {
                   console.log(e.target.files);
                   console.log("------------");
@@ -364,7 +368,7 @@ const Tables = () => {
                   upload_(e);
                 }}
               />
-            </div>
+            </label>
             <div class="select-dropdown">
               <select
                 class="form-control"
