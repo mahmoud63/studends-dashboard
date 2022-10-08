@@ -80,7 +80,7 @@ function Tables() {
               <Grid item>
                 <ButtonBase sx={{ width: 300, height: 300 }}>
                   <a href={r.link} target="_blank">
-                    <Img alt="complex" src={r.link} />
+                    <Img alt="complex" src={r.link} height="300" />
                   </a>
                 </ButtonBase>
               </Grid>
@@ -88,7 +88,18 @@ function Tables() {
                 <Grid item xs container direction="column" spacing={2}>
                   <Grid item xs>
                     <Typography gutterBottom variant="subtitle1" component="div">
-                      {new Date(r.createdAt).toLocaleDateString()}
+                      تاريخ الدفع{new Date(r.createdAt).toLocaleDateString()}
+                    </Typography>
+                  </Grid>
+
+                  <Grid item xs>
+                    <Typography gutterBottom variant="subtitle1" component="div">
+                      اسم الطالب:{r.student.name}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs>
+                    <Typography gutterBottom variant="subtitle1" component="div">
+                      اسم الشهر:{r.unit.name}
                     </Typography>
                   </Grid>
                   <Grid item>
