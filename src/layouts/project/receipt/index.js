@@ -6,7 +6,11 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 import { styled } from "@mui/material/styles";
 
 import Typography from "@mui/material/Typography";
@@ -22,7 +26,8 @@ const Img = styled("img")({
 
 function Tables() {
   const [show, setShow] = useState(false);
-
+  const handleClose = () => setShow(false);
+  const [receipt_, setReceipt_] = useState({});
   const [receipt, setReceipt] = useState([]);
 
   useEffect(() => {
@@ -76,12 +81,37 @@ function Tables() {
                 r.status == "APPROVED" ? "#bad9bd" : r.status == "DECLINED" ? "#deaca2" : "white",
             }}
           >
-            <Grid container spacing={2}>
-              <Grid item>
-                <ButtonBase sx={{ width: 300, height: 300 }}>
-                  <a href={r.link} target="_blank">
-                    <Img alt="complex" src={r.link} height="300" />
-                  </a>
+            <Grid
+              container
+              spacing={2}
+              // onClick={() => {
+              //   setReceipt_(r);
+              //   setShow(true);
+              // }}
+            >
+              <Grid
+                item
+                onClick={() => {
+                  setReceipt_(r);
+                  setShow(true);
+                }}
+              >
+                <ButtonBase
+                  sx={{ width: 300, height: 300 }}
+                  onClick={() => {
+                    setReceipt_(r);
+                    setShow(true);
+                  }}
+                >
+                  <Img
+                    alt="complex"
+                    src={r.link}
+                    height="300"
+                    onClick={() => {
+                      setReceipt_(r);
+                      setShow(true);
+                    }}
+                  />
                 </ButtonBase>
               </Grid>
               <Grid item xs={12} sm container>
@@ -125,6 +155,55 @@ function Tables() {
           </Paper>
         ))}
       </MDBox>
+      <Dialog open={show} onClose={handleClose}>
+        <DialogTitle> </DialogTitle>
+        <DialogContent>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <ButtonBase sx={{ width: 600, height: 600 }}>
+                <Img alt="complex" src={receipt_?.link} height="600" />
+              </ButtonBase>
+            </Grid>
+            <Grid item xs={12} sm container>
+              <Grid item xs container direction="column" spacing={2}>
+                <Grid item xs>
+                  <Typography gutterBottom variant="subtitle1" component="div">
+                    تاريخ الدفع{new Date(receipt_?.createdAt).toLocaleDateString()}
+                  </Typography>
+                </Grid>
+
+                <Grid item xs>
+                  <Typography gutterBottom variant="subtitle1" component="div">
+                    اسم الطالب:{receipt_?.student?.name}
+                  </Typography>
+                </Grid>
+                <Grid item xs>
+                  <Typography gutterBottom variant="subtitle1" component="div">
+                    اسم الشهر:{receipt_?.unit?.name}
+                  </Typography>
+                </Grid>
+              </Grid>
+            </Grid>
+          </Grid>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            onClick={(e) => {
+              put({ id: receipt_?.id, status: "APPROVED" });
+            }}
+          >
+            قبول
+          </Button>
+          <Button
+            variant="danger"
+            onClick={() => {
+              put({ id: receipt_?.id, status: "DECLINED" });
+            }}
+          >
+            رفض
+          </Button>
+        </DialogActions>
+      </Dialog>
     </DashboardLayout>
   );
 }

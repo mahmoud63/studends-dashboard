@@ -65,9 +65,8 @@ const Dashboard = () => {
   });
 
   const [show, setShow] = useState(false);
-  const [show_, setShow_] = useState(false);
-
   const handleClose = () => setShow(false);
+  const [show_, setShow_] = useState(false);
 
   const handleClose_ = () => setShow_(false);
   useEffect(() => {
