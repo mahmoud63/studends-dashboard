@@ -31,8 +31,6 @@ const Tables = () => {
     name: "",
     unitId: "",
     questions: [{ question: "", answer: "" }],
-    video: "",
-    youtubeId: "",
   });
 
   const [enable, setEnable] = useState(true);
@@ -42,8 +40,6 @@ const Tables = () => {
     name: "",
     unitId: "",
     questions: [{ question: "", answer: "" }],
-    video: "",
-    youtubeId: "",
   });
   const [show, setShow] = useState(false);
   const [show_, setShow_] = useState(false);
@@ -53,8 +49,6 @@ const Tables = () => {
       name: "",
       unitId: "",
       questions: [{ question: "", answer: "" }],
-      video: "",
-      youtubeId: "",
     });
     setShow(false);
   };
@@ -63,8 +57,6 @@ const Tables = () => {
       name: "",
       unitId: "",
       questions: [{ question: "", answer: "" }],
-      video: "",
-      youtubeId: "",
     });
     setShow_(false);
   };
@@ -136,8 +128,6 @@ const Tables = () => {
         name: "",
         unitId: "",
         questions: [{ question: "", answer: "" }],
-        video: "",
-        youtubeId: "",
       });
 
       handleClose();
@@ -159,8 +149,6 @@ const Tables = () => {
         name: "",
         unitId: "",
         questions: [{ question: "", answer: "" }],
-        video: "",
-        youtubeId: "",
       });
     });
   };
@@ -268,37 +256,6 @@ const Tables = () => {
                 e.preventDefault();
                 console.log(e.target.value);
                 setExam({ ...exam, name: e.target.value });
-              }}
-            />
-
-            <TextField
-              autoFocus
-              margin="dense"
-              id="name"
-              label="فديو الامتحان "
-              name="name"
-              aria-describedby="emailHelp"
-              value={exam.video}
-              fullWidth
-              onChange={(e) => {
-                e.preventDefault();
-                console.log(e.target.value);
-                setExam({ ...exam, video: e.target.value });
-              }}
-            />
-            <TextField
-              fullWidth
-              autoFocus
-              margin="dense"
-              id="name"
-              label="youtubeId "
-              name="name"
-              aria-describedby="emailHelp"
-              value={exam.youtubeId}
-              onChange={(e) => {
-                e.preventDefault();
-                console.log(e.target.value);
-                setExam({ ...exam, youtubeId: e.target.value });
               }}
             />
 
@@ -410,37 +367,6 @@ const Tables = () => {
                 e.preventDefault();
                 console.log(e.target.value);
                 setExam_({ ...exam_, name: e.target.value });
-              }}
-            />
-
-            <TextField
-              autoFocus
-              margin="dense"
-              id="name"
-              label="فديو الامتحان "
-              name="name"
-              aria-describedby="emailHelp"
-              value={exam_.video}
-              fullWidth
-              onChange={(e) => {
-                e.preventDefault();
-                console.log(e.target.value);
-                setExam_({ ...exam_, video: e.target.value });
-              }}
-            />
-            <TextField
-              fullWidth
-              autoFocus
-              margin="dense"
-              id="name"
-              label="youtubeId "
-              name="name"
-              aria-describedby="emailHelp"
-              value={exam_.youtubeId}
-              onChange={(e) => {
-                e.preventDefault();
-                console.log(e.target.value);
-                setExam_({ ...exam_, youtubeId: e.target.value });
               }}
             />
 

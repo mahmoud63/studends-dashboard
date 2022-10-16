@@ -16,21 +16,23 @@ import DialogTitle from "@mui/material/DialogTitle";
 const Tables = () => {
   const [data, setData] = useState([]);
   const [units, setUnits] = useState([]);
+  const [exams, setExams] = useState([]);
 
   const [lesson, setLesson] = useState({
     name: "",
     link: "",
     unit: "",
+    exam: null,
     youtubeId: "",
   });
-
-  const [unit, setUnit] = useState(0);
 
   const [lesson_, setLesson_] = useState({
     id: 0,
     name: "",
     link: "",
     unit: "",
+    exam: null,
+
     youtubeId: "",
   });
   const [show, setShow] = useState(false);
@@ -44,6 +46,7 @@ const Tables = () => {
   useEffect(() => {
     getdata();
     getUnits();
+    getExams();
   }, []);
 
   const getdata = () => {
@@ -78,6 +81,21 @@ const Tables = () => {
     });
   };
 
+  const getExams = () => {
+    axios({
+      method: "get",
+      headers: { Authorization: `Bearer ${localStorage.getItem("students-app-token")}` },
+      url: `${process.env.REACT_APP_BASE_URL}exam/-1`,
+    }).then((result) => {
+      let da = result.data.exams;
+
+      console.log(da);
+
+      setExams([]);
+      setExams(da);
+    });
+  };
+
   const delet = (lesson) => {
     console.log(lesson);
     axios({
@@ -104,8 +122,8 @@ const Tables = () => {
       getdata();
       handleClose();
 
-      setLesson({ id: 0, name: "", link: "", unit: "", youtubeId: "" });
-      setLesson_({ id: 0, name: "", link: "", unit: "", youtubeId: "" });
+      setLesson({ id: 0, name: "", link: "", unit: "", youtubeId: "", exam: null });
+      setLesson_({ id: 0, name: "", link: "", unit: "", youtubeId: "", exam: null });
     });
   };
 
@@ -118,8 +136,8 @@ const Tables = () => {
     }).then((result) => {
       getdata();
       handleClose_();
-      setLesson({ id: 0, name: "", link: "", unit: "", youtubeId: "" });
-      setLesson_({ id: 0, name: "", link: "", unit: "", youtubeId: "" });
+      setLesson({ id: 0, name: "", link: "", unit: "", youtubeId: "", exam: null });
+      setLesson_({ id: 0, name: "", link: "", unit: "", youtubeId: "", exam: null });
     });
   };
   return (
@@ -251,6 +269,24 @@ const Tables = () => {
                 ))}
               </select>
             </div>
+            <div class="select-dropdown">
+              <select
+                class="form-control"
+                onChange={(e) => {
+                  console.log(e.target.value);
+                  setLesson({ ...lesson, exam: e.target.value });
+                }}
+              >
+                <hr />
+
+                <option selected disabled>
+                  اختار الامتحان ان وجذ
+                </option>
+                {exams.map((exam) => (
+                  <option value={exam.id}>{exam.name}</option>
+                ))}
+              </select>
+            </div>
           </DialogContent>
           <DialogActions>
             <Button
@@ -330,6 +366,24 @@ const Tables = () => {
                 </option>
                 {units.map((unit) => (
                   <option value={unit.id}>{unit.name}</option>
+                ))}
+              </select>
+            </div>
+            <div class="select-dropdown">
+              <select
+                class="form-control"
+                onChange={(e) => {
+                  console.log(e.target.value);
+                  setLesson_({ ...lesson_, exam: e.target.value });
+                }}
+              >
+                <hr />
+
+                <option selected disabled>
+                  اختار الامتحان ان وجذ
+                </option>
+                {exams.map((exam) => (
+                  <option value={exam.id}>{exam.name}</option>
                 ))}
               </select>
             </div>
