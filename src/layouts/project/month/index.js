@@ -82,7 +82,7 @@ const Dashboard = () => {
     axios({
       method: "get",
       headers: { Authorization: `Bearer ${localStorage.getItem("students-app-token")}` },
-      url: `https://api.students.blankweb.online/api/year/`,
+      url: `${process.env.REACT_APP_BASE_URL}year/`,
     }).then((result) => {
       let da = result.data.years.reverse();
 
@@ -96,7 +96,7 @@ const Dashboard = () => {
     axios({
       method: "get",
       headers: { Authorization: `Bearer ${localStorage.getItem("students-app-token")}` },
-      url: `https://api.students.blankweb.online/api/unit/-1`,
+      url: `${process.env.REACT_APP_BASE_URL}unit/-1`,
     }).then((result) => {
       let da = result.data.units.reverse();
 
@@ -110,7 +110,7 @@ const Dashboard = () => {
     axios({
       method: "delete",
       headers: { Authorization: `Bearer ${localStorage.getItem("students-app-token")}` },
-      url: `https://api.students.blankweb.online/api/unit/`,
+      url: `${process.env.REACT_APP_BASE_URL}unit/`,
       data: { id: id },
     }).then((result) => {
       getUnits();
@@ -121,7 +121,7 @@ const Dashboard = () => {
     axios({
       method: "post",
       headers: { Authorization: `Bearer ${localStorage.getItem("students-app-token")}` },
-      url: `https://api.students.blankweb.online/api/unit/`,
+      url: `${process.env.REACT_APP_BASE_URL}unit/`,
       data: { ...unit },
     }).then((result) => {
       getUnits();
@@ -148,7 +148,7 @@ const Dashboard = () => {
     axios({
       method: "put",
       headers: { Authorization: `Bearer ${localStorage.getItem("students-app-token")}` },
-      url: `https://api.students.blankweb.online/api/unit/`,
+      url: `${process.env.REACT_APP_BASE_URL}unit/`,
       data: unit_,
     }).then((result) => {
       setShow_(false);

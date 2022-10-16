@@ -53,7 +53,7 @@ const Tables = () => {
     axios({
       method: "get",
       headers: { Authorization: `Bearer ${localStorage.getItem("students-app-token")}` },
-      url: `https://api.students.blankweb.online/api/lesson/${id || -1}`,
+      url: `${process.env.REACT_APP_BASE_URL}lesson/${id || -1}`,
     }).then((result) => {
       let da = result.data.lessons;
 
@@ -67,7 +67,7 @@ const Tables = () => {
     axios({
       method: "get",
       headers: { Authorization: `Bearer ${localStorage.getItem("students-app-token")}` },
-      url: `https://api.students.blankweb.online/api/unit/-1`,
+      url: `${process.env.REACT_APP_BASE_URL}unit/-1`,
     }).then((result) => {
       let da = result.data.units;
 
@@ -83,7 +83,7 @@ const Tables = () => {
     axios({
       method: "delete",
       headers: { Authorization: `Bearer ${localStorage.getItem("students-app-token")}` },
-      url: `https://api.students.blankweb.online/api/lesson/`,
+      url: `${process.env.REACT_APP_BASE_URL}lesson/`,
       data: { id: lesson },
     }).then((result) => {
       getdata();
@@ -97,7 +97,7 @@ const Tables = () => {
     axios({
       method: "post",
       headers: { Authorization: `Bearer ${localStorage.getItem("students-app-token")}` },
-      url: `https://api.students.blankweb.online/api/lesson/`,
+      url: `${process.env.REACT_APP_BASE_URL}lesson/`,
       data: { ...lesson },
     }).then((result) => {
       console.log(result);
@@ -113,7 +113,7 @@ const Tables = () => {
     axios({
       method: "put",
       headers: { Authorization: `Bearer ${localStorage.getItem("students-app-token")}` },
-      url: `https://api.students.blankweb.online/api/lesson/`,
+      url: `${process.env.REACT_APP_BASE_URL}lesson/`,
       data: { ...lesson_ },
     }).then((result) => {
       getdata();

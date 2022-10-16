@@ -38,7 +38,7 @@ function Tables() {
     axios({
       method: "get",
       headers: { Authorization: `Bearer ${localStorage.getItem("students-app-token")}` },
-      url: `https://api.students.blankweb.online/api/receipt/`,
+      url: `${process.env.REACT_APP_BASE_URL}receipt/`,
     }).then((result) => {
       let da = result.data.receipts.reverse();
 
@@ -52,7 +52,7 @@ function Tables() {
     axios({
       method: "put",
       headers: { Authorization: `Bearer ${localStorage.getItem("students-app-token")}` },
-      url: `https://api.students.blankweb.online/api/receipt/`,
+      url: `${process.env.REACT_APP_BASE_URL}receipt/`,
       data: body,
     }).then((result) => {
       getReceipt();

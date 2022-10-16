@@ -80,7 +80,7 @@ const Dashboard = () => {
     axios({
       method: "get",
       headers: { Authorization: `Bearer ${localStorage.getItem("students-app-token")}` },
-      url: `https://api.students.blankweb.online/api/slider/`,
+      url: `${process.env.REACT_APP_BASE_URL}slider/`,
     }).then((result) => {
       let da = result.data.sliders.reverse();
 
@@ -94,7 +94,7 @@ const Dashboard = () => {
     axios({
       method: "delete",
       headers: { Authorization: `Bearer ${localStorage.getItem("students-app-token")}` },
-      url: `https://api.students.blankweb.online/api/slider/`,
+      url: `${process.env.REACT_APP_BASE_URL}slider/`,
       data: { id: id },
     }).then((result) => {
       getsliders();
@@ -105,7 +105,7 @@ const Dashboard = () => {
     axios({
       method: "post",
       headers: { Authorization: `Bearer ${localStorage.getItem("students-app-token")}` },
-      url: `https://api.students.blankweb.online/api/slider/`,
+      url: `${process.env.REACT_APP_BASE_URL}slider/`,
       data: { ...slider },
     }).then((result) => {
       getsliders();
@@ -120,7 +120,7 @@ const Dashboard = () => {
     axios({
       method: "put",
       headers: { Authorization: `Bearer ${localStorage.getItem("students-app-token")}` },
-      url: `https://api.students.blankweb.online/api/slider/`,
+      url: `${process.env.REACT_APP_BASE_URL}slider/`,
       data: slider_,
     }).then((result) => {
       setShow_(false);

@@ -33,7 +33,7 @@ function Tables() {
     axios({
       method: "get",
       headers: { Authorization: `Bearer ${localStorage.getItem("students-app-token")}` },
-      url: `https://api.students.blankweb.online/api/question/`,
+      url: `${process.env.REACT_APP_BASE_URL}question/`,
     }).then((result) => {
       let da = result.data.questions.reverse();
 
@@ -47,7 +47,7 @@ function Tables() {
     axios({
       method: "delete",
       headers: { Authorization: `Bearer ${localStorage.getItem("students-app-token")}` },
-      url: `https://api.students.blankweb.online/api/question/`,
+      url: `${process.env.REACT_APP_BASE_URL}question/`,
       data: { id: id },
     }).then((result) => {
       getquestions();
@@ -58,7 +58,7 @@ function Tables() {
     axios({
       method: "post",
       headers: { Authorization: `Bearer ${localStorage.getItem("students-app-token")}` },
-      url: `https://api.students.blankweb.online/api/question/`,
+      url: `${process.env.REACT_APP_BASE_URL}question/`,
       data: { ...question },
     }).then((result) => {
       getquestions();
@@ -69,7 +69,7 @@ function Tables() {
     axios({
       method: "put",
       headers: { Authorization: `Bearer ${localStorage.getItem("students-app-token")}` },
-      url: `https://api.students.blankweb.online/api/question/`,
+      url: `${process.env.REACT_APP_BASE_URL}question/`,
       data: question,
     }).then((result) => {
       setShow(false);

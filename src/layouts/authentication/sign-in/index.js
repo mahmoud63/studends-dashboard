@@ -58,7 +58,7 @@ function Basic() {
     console.log(e);
     axios({
       method: "post",
-      url: `https://api.students.blankweb.online/api/auth/signin/`,
+      url: `${process.env.REACT_APP_BASE_URL}auth/signin/`,
       data: { email, password },
     }).then((result) => {
       console.log(result);
