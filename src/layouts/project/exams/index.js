@@ -12,8 +12,13 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 
 import ReactQuill from "react-quill";
+import EditorToolbar, { modules, formats } from "layouts/project/exams/toolbar";
 import "react-quill/dist/quill.snow.css";
 import AWS from "aws-sdk";
 
@@ -292,13 +297,16 @@ const Tables = () => {
                     onChange={(event) => console.log(event)}
                   /> */}
 
+                  <EditorToolbar />
+
                   <ReactQuill
                     theme="snow"
                     value={input.question}
                     style={{ marginBlock: 15 }}
-                    modules={{ toolbar: ["link", "image", "video", "bold", "italic"] }}
                     placeholder="السوال"
                     defaultValue="السوال"
+                    modules={modules}
+                    formats={formats}
                     onChange={(e) => {
                       handleFormChange(index, { target: { value: e, name: "question" } });
                     }}
@@ -315,17 +323,27 @@ const Tables = () => {
                     onChange={(event) => handleFormChange(index, event)}
                   /> */}
 
-                  <TextField
-                    fullWidth
-                    autoFocus
-                    margin="dense"
-                    id="name"
-                    label="الاجابه "
-                    value={input.answer}
-                    onChange={(e) =>
-                      handleFormChange(index, { target: { value: e.target.value, name: "answer" } })
-                    }
-                  />
+                  <FormControl fullWidth>
+                    <InputLabel id="demo-simple-select-label">الاجابه</InputLabel>
+                    <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      value={input.answer}
+                      label="الاجابه"
+                      sx={{ height: 50 }}
+                      onChange={(e) => {
+                        console.log(e.target.value);
+                        handleFormChange(index, {
+                          target: { value: e.target.value, name: "answer" },
+                        });
+                      }}
+                    >
+                      <MenuItem value={1}>1</MenuItem>
+                      <MenuItem value={2}>2</MenuItem>
+                      <MenuItem value={3}>3</MenuItem>
+                      <MenuItem value={4}>4</MenuItem>
+                    </Select>
+                  </FormControl>
                   <Button fullWidth color="warning" onClick={() => removeFields(index)}>
                     مسح
                   </Button>
@@ -403,13 +421,16 @@ const Tables = () => {
                     onChange={(event) => console.log(event)}
                   /> */}
 
+                  <EditorToolbar />
+
                   <ReactQuill
                     theme="snow"
                     value={input.question}
                     style={{ marginBlock: 15 }}
-                    modules={{ toolbar: ["link", "image", "video", "bold", "italic"] }}
                     placeholder="السوال"
                     defaultValue="السوال"
+                    modules={modules}
+                    formats={formats}
                     onChange={(e) => {
                       handleFormChange_(index, { target: { value: e, name: "question" } });
                     }}
@@ -426,19 +447,28 @@ const Tables = () => {
                     onChange={(event) => handleFormChange(index, event)}
                   /> */}
 
-                  <TextField
-                    fullWidth
-                    autoFocus
-                    margin="dense"
-                    id="name"
-                    label="الاجابه "
-                    value={input.answer}
-                    onChange={(e) =>
-                      handleFormChange_(index, {
-                        target: { value: e.target.value, name: "answer" },
-                      })
-                    }
-                  />
+                  <FormControl fullWidth>
+                    <InputLabel id="demo-simple-select-label">الاجابه</InputLabel>
+                    <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      value={input.answer}
+                      label="الاجابه"
+                      sx={{ height: 50 }}
+                      onChange={(e) => {
+                        console.log(e.target.value);
+                        handleFormChange_(index, {
+                          target: { value: e.target.value, name: "answer" },
+                        });
+                      }}
+                    >
+                      <MenuItem value={1}>1</MenuItem>
+                      <MenuItem value={2}>2</MenuItem>
+                      <MenuItem value={3}>3</MenuItem>
+                      <MenuItem value={4}>4</MenuItem>
+                    </Select>
+                  </FormControl>
+
                   <Button fullWidth color="warning" onClick={() => removeFields_(index)}>
                     مسح
                   </Button>

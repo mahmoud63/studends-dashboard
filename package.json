@@ -51,6 +51,7 @@
   },
   "scripts": {
     "start": "REACT_APP_BASE_URL=http://localhost:4000/api/ react-scripts start",
+    "start:prod": "REACT_APP_BASE_URL=https://api.students.blankweb.online/api/ react-scripts start",
     "build": "REACT_APP_BASE_URL=https://api.students.blankweb.online/api/ react-scripts build && rsync -a build/ .build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
