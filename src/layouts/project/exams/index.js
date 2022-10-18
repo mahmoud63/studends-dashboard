@@ -18,7 +18,16 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 
 import ReactQuill from "react-quill";
-import EditorToolbar, { modules, formats } from "layouts/project/exams/toolbar";
+import { Quill } from "react-quill";
+
+const Size = Quill.import("formats/size");
+Size.whitelist = ["extra-small", "small", "medium", "large"];
+Quill.register(Size, true);
+
+// Add fonts to whitelist and register them
+const Font = Quill.import("formats/font");
+Font.whitelist = ["arial", "comic-sans", "courier-new", "georgia", "helvetica", "lucida"];
+Quill.register(Font, true);
 import "react-quill/dist/quill.snow.css";
 import AWS from "aws-sdk";
 
@@ -297,16 +306,59 @@ const Tables = () => {
                     onChange={(event) => console.log(event)}
                   /> */}
 
-                  <EditorToolbar />
-
                   <ReactQuill
                     theme="snow"
+                    key={index}
                     value={input.question}
                     style={{ marginBlock: 15 }}
                     placeholder="السوال"
                     defaultValue="السوال"
-                    modules={modules}
-                    formats={formats}
+                    modules={{
+                      toolbar: [
+                        "font",
+                        "size",
+                        "bold",
+                        "italic",
+                        "underline",
+                        "strike",
+                        "color",
+                        "background",
+                        "script",
+                        "header",
+                        "blockquote",
+                        "code-block",
+                        "indent",
+                        "list",
+                        "direction",
+                        "align",
+                        "link",
+                        "image",
+                        "video",
+                        "formula",
+                      ],
+                    }}
+                    formats={[
+                      "font",
+                      "size",
+                      "bold",
+                      "italic",
+                      "underline",
+                      "strike",
+                      "color",
+                      "background",
+                      "script",
+                      "header",
+                      "blockquote",
+                      "code-block",
+                      "indent",
+                      "list",
+                      "direction",
+                      "align",
+                      "link",
+                      "image",
+                      "video",
+                      "formula",
+                    ]}
                     onChange={(e) => {
                       handleFormChange(index, { target: { value: e, name: "question" } });
                     }}
@@ -421,16 +473,58 @@ const Tables = () => {
                     onChange={(event) => console.log(event)}
                   /> */}
 
-                  <EditorToolbar />
-
                   <ReactQuill
                     theme="snow"
                     value={input.question}
                     style={{ marginBlock: 15 }}
                     placeholder="السوال"
                     defaultValue="السوال"
-                    modules={modules}
-                    formats={formats}
+                    modules={{
+                      toolbar: [
+                        "font",
+                        "size",
+                        "bold",
+                        "italic",
+                        "underline",
+                        "strike",
+                        "color",
+                        "background",
+                        "script",
+                        "header",
+                        "blockquote",
+                        "code-block",
+                        "indent",
+                        "list",
+                        "direction",
+                        "align",
+                        "link",
+                        "image",
+                        "video",
+                        "formula",
+                      ],
+                    }}
+                    formats={[
+                      "font",
+                      "size",
+                      "bold",
+                      "italic",
+                      "underline",
+                      "strike",
+                      "color",
+                      "background",
+                      "script",
+                      "header",
+                      "blockquote",
+                      "code-block",
+                      "indent",
+                      "list",
+                      "direction",
+                      "align",
+                      "link",
+                      "image",
+                      "video",
+                      "formula",
+                    ]}
                     onChange={(e) => {
                       handleFormChange_(index, { target: { value: e, name: "question" } });
                     }}

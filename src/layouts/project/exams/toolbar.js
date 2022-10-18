@@ -76,8 +76,8 @@ export const formats = [
 ];
 
 // Quill Toolbar component
-export const QuillToolbar = () => (
-  <div id="toolbar" style={{ marginBlock: 10, direction: "rtl" }}>
+export const QuillToolbar = ({ key }) => (
+  <div id="toolbar" key={key} style={{ marginBlock: 10, direction: "rtl" }}>
     <span className="ql-formats">
       <select className="ql-font" defaultValue="arial">
         <option value="arial">Arial</option>
