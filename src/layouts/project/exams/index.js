@@ -194,7 +194,7 @@ const Tables = () => {
 
   const addFields_ = () => {
     let newfield = { question: "", answer: "" };
-    setExam_({ ...exam_, questions: [...exam.questions, newfield] });
+    setExam_({ ...exam_, questions: [...exam_.questions, newfield] });
   };
 
   const removeFields_ = (index) => {
